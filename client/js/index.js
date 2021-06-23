@@ -51,10 +51,10 @@ function updatePrice() {
   let unitPrice = document.getElementById("unit-price").innerHTML;
   let amount = parseInt(unitPrice) * parseInt(quantity);
 
-  document.getElementById("cart-total").innerHTML = "$ " + amount;
-  document.getElementById("summary-price").innerHTML = "$ " + unitPrice;
+  document.getElementById("cart-total").innerHTML = "R$ " + amount +",00";
+  document.getElementById("summary-price").innerHTML = "R$ " + unitPrice +",00";
   document.getElementById("summary-quantity").innerHTML = quantity;
-  document.getElementById("summary-total").innerHTML = "$ " + amount;
+  document.getElementById("summary-total").innerHTML = "R$ " + amount +",00";
 }
 document.getElementById("quantity").addEventListener("change", updatePrice);
 updatePrice();  
