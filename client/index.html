@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Template Code - Checkout Pro</title>  
+    <title>Checkout Pro Example</title>  
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
     <script type="text/javascript" src="js/index.js" defer></script>
   </head>
@@ -33,8 +32,7 @@
                           <div class="col-md-4 product-detail">
                             <h5>Site institucional</h5>
                             <div class="product-info">
-                              <b>Inclui manutenção: </b>Sim<br>
-                              <b>Estático: </b>Não<br>
+                              <b>Descrição: </b> <span id="product-description">Site dinâmico com manutenção inclusa</span><br>
                               <b>Preço:</b> R$ <span id="unit-price">1200,00</span></p>
                             </div>
                           </div>
@@ -52,7 +50,7 @@
                 <div class="summary">
                   <h3>Resumo</h3>
                   <div class="summary-item"><span class="text">Total</span><span class="price" id="cart-total"></span></div>
-                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn">Continuar</button>
+                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onclick="sendPreference()">Continuar</button>
                 </div>
               </div>
             </div>
@@ -63,29 +61,29 @@
       <section class="payment-form dark">
         <div class="container_payment">
           <div class="block-heading">
-            <h2>Checkout Payment</h2>
-            <p>This is an example of a Mercado Pago integration</p>
+            <h2>Formulário de pagamento</h2>
+            <p>Preencha os dados necessários</p>
           </div>
           <div class="form-payment">
             <div class="products">
-              <h2 class="title">Summary</h3>
+              <h2 class="title">Resumo</h3>
               <div class="item">
                 <span class="price" id="summary-price"></span>
-                <p class="item-name">Book x <span id="summary-quantity"></span></p>
+                <p class="item-name">Site institucional x <span id="summary-quantity"></span></p>
               </div>
               <div class="total">Total<span class="price" id="summary-total"></span></div>
             </div>
             <div class="payment-details">
               <div class="form-group col-sm-12">
                 <br>      
-                <div id="button-checkout">
+                <div id="send-button">
                 </div>                 
                 <br>
-                <a id="go-back">
+                <a id="go-back" onclick="closeCheckoutForm()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" class="chevron-left">
                     <path fill="#009EE3" fill-rule="nonzero"id="chevron_left" d="M7.05 1.4L6.2.552 1.756 4.997l4.449 4.448.849-.848-3.6-3.6z"></path>
                   </svg>
-                  Go back to Shopping Cart
+                  Voltar ao carrinho
                 </a>
               </div>
             </div>
