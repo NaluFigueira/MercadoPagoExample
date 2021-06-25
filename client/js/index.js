@@ -21,8 +21,9 @@ function createProductFactory () {
 
   productFactory.updateProductQuantity = (product) => {
     let quantityField = document.querySelector("#quantity");
-  
-    product.quantity = quantityField.value;
+    if(quantityField) {
+      product.quantity = quantityField.value;
+    }
   }
 
   return productFactory;
@@ -70,10 +71,18 @@ function updatePrice() {
   let summaryQuantityField = document.getElementById("summary-quantity");
   let summaryTotalField = document.getElementById("summary-total");
 
+  if(cartTotalField){
     cartTotalField.innerHTML = "R$ " + amount +",00";
+  }
+  if(summaryPriceField) {
     summaryPriceField.innerHTML = "R$ " + product.unitPrice +",00";
+  }
+  if(summaryQuantityField) {
     summaryQuantityField.innerHTML = product.quantity;
+  }
+  if(summaryTotalField) {
     summaryTotalField.innerHTML = "R$ " + amount +",00";
+  }
 }
 
 document.getElementById("quantity").addEventListener("change", onQuantityChange);
