@@ -8,6 +8,7 @@
     "debug": "nodemon --inspect=5005 server.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "4.17.1",
     "mercadopago": "^1.5.1"
   },

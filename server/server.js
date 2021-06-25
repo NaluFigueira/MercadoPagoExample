@@ -1,13 +1,15 @@
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const mercadopago = require("mercadopago");
 
-//REPLACE WITH YOUR ACCESS TOKEN AVAILABLE IN: https://developers.mercadopago.com/panel/credentials
-mercadopago.configurations.setAccessToken("YOUR_ACCESS_TOKEN"); 
+mercadopago.configurations.setAccessToken("ACCESS_TOKEN"); 
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("../../client"));
+app.use(cors())
+
 
 app.get("/", (_, res) => res.status(200).sendFile("index.html")); 
 
@@ -15,8 +17,8 @@ app.post("/create_preference", (req, res) => {
 	let preference = {
 		items: [{
 			title: req.body.description,
-			unit_price: Number(req.body.unitPrice),
-			quantity: Number(req.body.quantity),
+			unit_price: parseFloat(req.body.unitPrice),
+			quantity: parseInt(req.body.quantity),
 		}],
 		back_urls: {
 			"success": "http://localhost:8080/feedback",

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script type="text/javascript" src="js/index.js" defer></script>
   </head>
   <body>
@@ -30,15 +30,15 @@
                             <img class="img-fluid mx-auto d-block image" src="img/product.png">
                           </div>
                           <div class="col-md-4 product-detail">
-                            <h5>Site institucional</h5>
+                            <h5 id="product-name"></h5>
                             <div class="product-info">
-                              <b>Descrição: </b> <span id="product-description">Site dinâmico com manutenção inclusa</span><br>
-                              <b>Preço:</b> R$ <span id="unit-price">1200,00</span></p>
+                              <b>Descrição: </b> <span id="product-description"></span><br>
+                              <b>Preço:</b> R$ <span id="unit-price"></span></p>
                             </div>
                           </div>
                           <div class="col-md-3 product-detail">
                             <label for="quantity"><h5>Quantidade</h5></label>
-                            <input type="number" id="quantity" value="1" class="form-control">
+                            <input type="number" id="quantity" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -50,41 +50,8 @@
                 <div class="summary">
                   <h3>Resumo</h3>
                   <div class="summary-item"><span class="text">Total</span><span class="price" id="cart-total"></span></div>
-                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onclick="sendPreference()">Continuar</button>
+                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onclick="sendProduct()">Continuar</button>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--payment-->
-      <section class="payment-form dark">
-        <div class="container_payment">
-          <div class="block-heading">
-            <h2>Formulário de pagamento</h2>
-            <p>Preencha os dados necessários</p>
-          </div>
-          <div class="form-payment">
-            <div class="products">
-              <h2 class="title">Resumo</h3>
-              <div class="item">
-                <span class="price" id="summary-price"></span>
-                <p class="item-name">Site institucional x <span id="summary-quantity"></span></p>
-              </div>
-              <div class="total">Total<span class="price" id="summary-total"></span></div>
-            </div>
-            <div class="payment-details">
-              <div class="form-group col-sm-12">
-                <br>      
-                <div id="send-button">
-                </div>                 
-                <br>
-                <a id="go-back" onclick="closeCheckoutForm()">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" class="chevron-left">
-                    <path fill="#009EE3" fill-rule="nonzero"id="chevron_left" d="M7.05 1.4L6.2.552 1.756 4.997l4.449 4.448.849-.848-3.6-3.6z"></path>
-                  </svg>
-                  Voltar ao carrinho
-                </a>
               </div>
             </div>
           </div>

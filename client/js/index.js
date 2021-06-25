@@ -1,102 +1,42 @@
-/*---------------------------------------------------------
-BUTTON METHODS
----------------------------------------------------------*/
+const mp = new MercadoPago("PUBLIC_KEY", {
+  locale: 'pt-BR'
+});
 
-function setCheckoutButtonDisabledAttribute (isDisabled){
-  let checkoutButton = document.querySelector("#checkout-btn");  
+function createProductFactory () {
+  let productFactory = {};
 
-  if(checkoutButton) {
-    checkoutButton.setAttribute("disabled", isDisabled);
+  productFactory.createProduct = (name, description, unitPrice) => {
+    document.getElementById("product-name").innerHTML = name;
+    document.getElementById("product-description").innerHTML = description;
+    document.getElementById("unit-price").innerHTML = unitPrice + ",00";
+    document.getElementById("quantity").value = 1;
+
+    return {
+      name, 
+      description, 
+      unitPrice,
+      quantity: 1
+    }
   }
-}
 
-function createSendButton(preference) {
-  let script = document.createElement("script");
+  productFactory.updateProductQuantity = (product) => {
+    let quantityField = document.querySelector("#quantity");
   
-  script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js";
-  script.type = "text/javascript";
-  script.dataset.preferenceId = preference;
-
-  let sendButton = document.getElementById("send-button");
-  if(!sendButton) {
-    return null;
-  }
-  sendButton.innerHTML = "";
-  sendButton.appendChild(script);
-}
-
-/*---------------------------------------------------------
-CHECKOUT FORM METHODS
----------------------------------------------------------*/
-
-function openCheckoutForm () {
-  let shoppingCartContainer = document.querySelector(".shopping-cart");
-  let checkoutFormContainer = document.querySelector(".container_payment");
-  if(shoppingCartContainer) {
-    shoppingCartContainer.setAttribute("style", "display: none");
-  }
-  if(checkoutFormContainer) {
-    checkoutFormContainer.setAttribute("style", "display: block");
-  }
-}
-
-function closeCheckoutForm() {
-  let shoppingCartContainer = document.querySelector(".shopping-cart");
-  let checkoutFormContainer = document.querySelector(".container_payment");
-  if(shoppingCartContainer) {
-    shoppingCartContainer.setAttribute("style", "display: none");
-  }
-  if(checkoutFormContainer) {
-    checkoutFormContainer.setAttribute("style", "display: block");
-  }
-  setCheckoutButtonDisabledAttribute(false);
-}
-
-/*---------------------------------------------------------
-PRODUCT MANAGEMENT METHODS
----------------------------------------------------------*/
-
-function getProductHTMLFields () {
-  let quantityField = document.querySelector("#quantity");
-  let descriptionField = document.querySelector("#product-description");
-  let unitPriceField = document.querySelector("#unit-price");
-
-  if(!quantityField || !descriptionField || !unitPriceField) {
-    return null;
+    product.quantity = quantityField.value;
   }
 
-  return {
-    quantityField,
-    descriptionField,
-    unitPriceField
-  }
-}
+  return productFactory;
+};
 
-function createProduct() {
-  let productHTMLFields = getProductHTMLFields();
-  if(!productHTMLFields) {
-    return null;
-  }
-
-  let {quantityField, descriptionField, unitPriceField} = productHTMLFields;
-
-  return {
-    quantity: quantityField.value,
-    description: descriptionField.innerHTML,
-    unitPrice: unitPriceField.innerHTML
-  };
-}
+const productFactory = createProductFactory();
+const product = productFactory.createProduct(
+  "Site institucional", 
+  "Site dinâmico com manutenção inclusa", 
+  1200
+);
 
 function sendProduct () {
-  setCheckoutButtonDisabledAttribute(true);
-
-  let product = createProduct();
-
-  if(!product) {
-    return null;
-  }
-    
-  fetch("/create_preference", {
+  fetch("http://localhost:8080/create_preference", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -105,22 +45,24 @@ function sendProduct () {
     })
       .then(response => response.json())
       .then(preference => {
-          createSendButton(preference.id);
-          openCheckoutForm();
+          mp.checkout({
+            preference: {
+                id: preference.id
+            },
+            autoOpen: true
+          })
       })
       .catch(function() {
-          alert("Unexpected error");
-          setCheckoutButtonDisabledAttribute(false);
+          alert("Ocorreu um erro, tente novamente.");
       });
 }
 
-function updatePrice() {
-  let product = createProduct();
+function onQuantityChange() {
+  productFactory.updateProductQuantity(product);
+  updatePrice();
+}
 
-  if(!product) {
-    return null;
-  }
-  
+function updatePrice() {
   let amount = parseInt(product.unitPrice) * parseInt(product.quantity);
 
   let cartTotalField = document.getElementById("cart-total");
@@ -128,20 +70,11 @@ function updatePrice() {
   let summaryQuantityField = document.getElementById("summary-quantity");
   let summaryTotalField = document.getElementById("summary-total");
 
-
-  if(cartTotalField) {
     cartTotalField.innerHTML = "R$ " + amount +",00";
-  }
-  if(summaryPriceField) {
     summaryPriceField.innerHTML = "R$ " + product.unitPrice +",00";
-  }
-  if(summaryQuantityField) {
     summaryQuantityField.innerHTML = product.quantity;
-  }
-  if(summaryTotalField) {
     summaryTotalField.innerHTML = "R$ " + amount +",00";
-  }
 }
 
-document.getElementById("quantity").addEventListener("change", updatePrice);
+document.getElementById("quantity").addEventListener("change", onQuantityChange);
 updatePrice(); 
