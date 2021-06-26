@@ -16,4 +16,4 @@
 
 ## How to run it
 
-Clone or [download](https://github.com/mercadopago/checkout-payment-sample/archive/master.zip) this project, move to the server implementation of your choice and follow its README instructions.
+Clone or [download](https://github.com/NaluFigueira/MercadoPagoExample/archive/refs/heads/main.zip) this project, move to the server implementation of your choice and follow its README instructions.
