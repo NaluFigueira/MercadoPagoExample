@@ -1,4 +1,4 @@
-# Checkout payment processing with Checkout Pro
+# Mercado Pago - Checkout Pro Example
 
 ### This is a simple example of how you can accept payments by integrating our [Checkout PRO](https://www.mercadopago.com/developers/en/guides/online-payments/checkout-pro/introduction)
 

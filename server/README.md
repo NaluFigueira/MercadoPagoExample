@@ -1,4 +1,4 @@
-# Checkout payment processing with Checkout Pro
+# Mercado Pago - Checkout Pro Example
 
 ## Using a NodeJS server with Express
 

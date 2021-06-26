@@ -1,4 +1,4 @@
-# Checkout payment processing with Checkout Pro
+# Mercado Pago - Checkout Pro Example
 
 ### Requirements
 - Node v10 or higher
